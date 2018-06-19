@@ -12,10 +12,9 @@ import csv
 import requests
 import get_attri
 import time
+import random
+import math
 cj=cookielib.CookieJar();
-#seesion=requests.Session();
-#headers={"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit 537/36 (KHTML, like Gecko) Chrome",
-#         "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"}
 opener=urllib2.build_opener(urllib2.HTTPCookieProcessor(cj));
 urllib2.install_opener(opener);      
 #创建Pokemon对象                
@@ -43,7 +42,6 @@ if(os.path.exists('pokemon.csv')):
 else:
     url="http://www.pokemon.name/wiki/%E4%B8%BB%E9%A2%98:%E5%AE%9D%E5%8F%AF%E6%A2%A6";
     #创建Request对象
-	#req=session.get(url,headers=headers);
     request=urllib2.Request(url);
     user_agent_list = [  
         "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1",  
@@ -51,13 +49,11 @@ else:
         "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6",  
         "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1090.0 Safari/536.6",  
         "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/19.77.34.5 Safari/537.1",  
-  
         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.9 Safari/536.5",  
         "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5",  
         "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3",  
         "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3",  
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_0) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3",  
-  
         "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3",  
         "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3",  
         "Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3",  
@@ -122,7 +118,6 @@ else:
     request.add_header("User-Agent","Mozilla/5.0");
     response=urllib2.urlopen(request);
     soup=bf(response.read(),'html.parser',from_encoding='utf-8');
-#	soup=bf(req.text);
     ccs=soup.find_all('td'); 
     temp_list=0;                     
     cow_=0;
@@ -133,11 +128,9 @@ else:
                 H=link.find('a');
                 Root="http://www.pokemon.name";
                 poke=Pokemon(int(link.get_text().split('. ')[0].split()[0].encode('utf-8')),link.get_text().split('. ')[1].encode('utf-8') ,(Root.decode('utf-8')+H['href']).encode('utf-8') );                
-                attrilist=get_attri.get_attri(poke.href,user_agent_list[temp_list]);
+                attrilist=get_attri.get_attri(poke.href,user_agent_list[int(math.floor(len(user_agent_list)*random.random()))]);
                 cow_=cow_+1;
-                if(cow_%6==0):
-                    temp_list=temp_list+1;
-                time.sleep(60);
+                time.sleep(1);
                 if(temp_list==len(user_agent_list)):
                     temp_list=0;
                 poke.ADD(attrilist[0][0],attrilist[1][0],attrilist[2][0],attrilist[3][0],attrilist[4][0],attrilist[5][0],attrilist[6][0],attrilist[7][0]);
