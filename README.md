@@ -1,6 +1,6 @@
 # python_Pokemon
 using python to capture the data of Pokemon in Chinese Pokemon wiki
-## using model: urllib2,cookielib,BeautifulSoup,codecs,csv,time
+## using module: urllib2,cookielib,BeautifulSoup,codecs,csv,time
 ### codecs
 For capturing the information in Chinese Website, the decoding different between python and web information is a big deal. You need to familiar with how to decode and encode character.
 Codecs is a model to help you to fix the problem.
