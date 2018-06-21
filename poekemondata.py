@@ -34,11 +34,12 @@ class Pokemon(object):
         self.wei=wei;
 pokemon=[];
 if(os.path.exists('pokemon.csv')):
-        csv_file=csv.reader(open('pokemon.csv','r'));
-        for stu in csv_file:
-            poke=Pokemon(stu[0],stu[1],stu[2]);
-            poke.ADD(stu[3],stu[4],stu[5],stu[6],stu[7],stu[8],stu[9],stu[10]);
-            pokemon.append(poke);                        
+      csv_file=codecs.open('pokemon.csv','r',"utf-8-sig");
+      for stu in csv_file:
+          tm=stu.split(',');
+          poke=Pokemon(int(tm[0]),str(tm[1].encode('utf-8')),str(tm[2].encode('utf-8')));
+          poke.ADD(int(tm[3]),int(tm[4]),int(tm[5]),int(tm[6]),int(tm[7]),int(tm[8]),int(tm[9]),float(tm[10]));
+          pokemon.append(poke);                                  
 else:
     url="http://www.pokemon.name/wiki/%E4%B8%BB%E9%A2%98:%E5%AE%9D%E5%8F%AF%E6%A2%A6";
     #创建Request对象
